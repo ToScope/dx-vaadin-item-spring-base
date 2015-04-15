@@ -11,14 +11,19 @@ import com.vaadin.ui.VerticalLayout
 import com.vaadin.ui.themes.ValoTheme
 import static de.tfr.thesis.vaadin.base.config.Configs.LOCAL_HOST
 @SpringUI
-public class MyVaadinUI extends UI {
+public class LandingPageUI extends UI {
 
 
 	override protected void init(VaadinRequest vaadinRequest) {
 		val root = new VerticalLayout()
 		root.addComponent(new Label("Vaadin UI tests:"))
-		root.addComponent(new Link(VaadinXtendUI.VIEW_NAME, new ExternalResource(LOCAL_HOST + VaadinXtendUI.VIEW_NAME)))
+		root.addComponent(newLinkToView(VaadinXtendUI.VIEW_NAME))
+		root.addComponent(newLinkToView(DerivedPropertiesTestUI.VIEW_NAME))
 		setContent(root)
+	}
+	
+	def newLinkToView(String view){
+		new Link(view, new ExternalResource(LOCAL_HOST + view))
 	}
 
 	def Button newNavigationButton(String viewName) {
