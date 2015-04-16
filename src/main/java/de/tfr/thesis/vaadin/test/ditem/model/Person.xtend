@@ -23,7 +23,7 @@ class Person {
 		
 	@Derived(_lastName, _firstName)
 	def String fullName() {
-		return firstName + " " + lastName;
+		return firstName + " " + lastName
 	}
 	
 }
