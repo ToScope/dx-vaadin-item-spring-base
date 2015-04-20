@@ -27,14 +27,11 @@ class DItemCollectionTestUI extends VerticalLayout implements View{
 	public static val VIEW_NAME = "ditem-collection-test";
 
 	Table table
-
+	
 	@PostConstruct
     def void init() {
 		margin = true
 		addComponent(new Label("DItem Collection Test".h2, ContentMode.HTML))
-
-		val form = new FormLayout()
-		addComponent(form)
 
 		val quote = newQuoteMock()
 		var item = new QuoteItem(quote)
@@ -51,8 +48,13 @@ class DItemCollectionTestUI extends VerticalLayout implements View{
 		val commit = new Button("commit")
 		commit.addClickListener(e|table.commit())
 		addComponent(commit)
-
-		addComponent(new AddressForm(item.personProp.addressesProp.head))
+		
+		val form = new AddressForm(item.personProp.addressesProp.head)
+		addComponent(form)
+		table.addItemClickListener[
+			form.data = it.item as AddressItem
+			println(it)
+		]
 	}
 
 	def static newQuoteMock() {
@@ -100,10 +102,15 @@ class DItemCollectionTestUI extends VerticalLayout implements View{
 				layout.addComponent(it)
 				immediate = true
 			]
+			setData(item)
+		}
+		
+		def setData(AddressItem item) {
 			street.propertyDataSource = item.streetProp
 			city.propertyDataSource = item.cityProp
 			zip.propertyDataSource = item.zipProp
 		}
+		
 	}
 	
 	override enter(ViewChangeEvent event) {
