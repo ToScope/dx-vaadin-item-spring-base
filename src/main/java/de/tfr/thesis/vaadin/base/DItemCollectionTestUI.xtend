@@ -1,43 +1,40 @@
 package de.tfr.thesis.vaadin.base
 
-import com.vaadin.annotations.Theme
-import com.vaadin.server.VaadinRequest
+import com.vaadin.navigator.View
+import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent
 import com.vaadin.shared.ui.label.ContentMode
-import com.vaadin.spring.annotation.SpringUI
+import com.vaadin.spring.annotation.SpringView
 import com.vaadin.ui.Button
 import com.vaadin.ui.CustomComponent
 import com.vaadin.ui.FormLayout
 import com.vaadin.ui.Label
 import com.vaadin.ui.Table
 import com.vaadin.ui.TextField
-import com.vaadin.ui.UI
 import com.vaadin.ui.VerticalLayout
 import de.tfr.thesis.vaadin.test.ditem.model.Address
 import de.tfr.thesis.vaadin.test.ditem.model.AddressItem
 import de.tfr.thesis.vaadin.test.ditem.model.Person
 import de.tfr.thesis.vaadin.test.ditem.model.Quote
 import de.tfr.thesis.vaadin.test.ditem.model.QuoteItem
+import javax.annotation.PostConstruct
 
 import static extension de.tfr.thesis.util.html.Tags.*
 import static extension de.tfr.thesis.util.html.Units.*
 
-@Theme("valo")
-@SpringUI(path=DItemCollectionTestUI.VIEW_NAME)
-class DItemCollectionTestUI extends UI {
+@SpringView(name=DItemCollectionTestUI.VIEW_NAME)
+class DItemCollectionTestUI extends VerticalLayout implements View{
 
 	public static val VIEW_NAME = "ditem-collection-test";
 
 	Table table
 
-	override protected init(VaadinRequest request) {
-		val root = new VerticalLayout()
-		root.margin = true
-		content = root
-
-		root.addComponent(new Label("DItem Collection Test".h2, ContentMode.HTML))
+	@PostConstruct
+    def void init() {
+		margin = true
+		addComponent(new Label("DItem Collection Test".h2, ContentMode.HTML))
 
 		val form = new FormLayout()
-		root.addComponent(form)
+		addComponent(form)
 
 		val quote = newQuoteMock()
 		var item = new QuoteItem(quote)
@@ -47,15 +44,15 @@ class DItemCollectionTestUI extends UI {
 		table.immediate = true
 		table.editable = true
 		table.height = "200".px
-		root.addComponent(table)
+		addComponent(table)
 
 		item.personProp.addressesProp.forEach[#[cityProp, zipProp, streetProp].forEach[addValueChangeListener(e|println(e))]]
 
 		val commit = new Button("commit")
 		commit.addClickListener(e|table.commit())
-		root.addComponent(commit)
+		addComponent(commit)
 
-		root.addComponent(new AddressForm(item.personProp.addressesProp.head))
+		addComponent(new AddressForm(item.personProp.addressesProp.head))
 	}
 
 	def static newQuoteMock() {
@@ -108,6 +105,9 @@ class DItemCollectionTestUI extends UI {
 			zip.propertyDataSource = item.zipProp
 
 		}
+	}
+	
+	override enter(ViewChangeEvent event) {
 	}
 
 }

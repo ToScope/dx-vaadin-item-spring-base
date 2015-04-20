@@ -1,24 +1,25 @@
 package de.tfr.thesis.vaadin.base
 
 import com.vaadin.annotations.Theme
-import com.vaadin.server.VaadinRequest
+import com.vaadin.navigator.View
+import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent
 import com.vaadin.shared.ui.label.ContentMode
-import com.vaadin.spring.annotation.SpringUI
+import com.vaadin.spring.annotation.SpringView
 import com.vaadin.ui.FormLayout
 import com.vaadin.ui.Label
 import com.vaadin.ui.TextField
-import com.vaadin.ui.UI
 import com.vaadin.ui.VerticalLayout
 import de.tfr.thesis.vaadin.test.ditem.model.Address
 import de.tfr.thesis.vaadin.test.ditem.model.Person
 import de.tfr.thesis.vaadin.test.ditem.model.Quote
 import de.tfr.thesis.vaadin.test.ditem.model.QuoteItem
+import javax.annotation.PostConstruct
 
 import static extension de.tfr.thesis.util.html.Tags.*
 
 @Theme("valo")
-@SpringUI(path=DerivedPropertiesTestUI.VIEW_NAME)
-class DerivedPropertiesTestUI extends UI {
+@SpringView(name=DerivedPropertiesTestUI.VIEW_NAME)
+class DerivedPropertiesTestUI extends VerticalLayout implements View {
 
 	public static val VIEW_NAME = "derived-properties-test";
 
@@ -26,15 +27,14 @@ class DerivedPropertiesTestUI extends UI {
 	TextField lastName
 	Label fullName
 
-	override protected init(VaadinRequest request) {
-		val root = new VerticalLayout()
-		root.margin = true
-		content = root
+	@PostConstruct
+	def init() {
+		margin = true
 
-		root.addComponent(new Label("Derived Properties Test".h2, ContentMode.HTML))
+		addComponent(new Label("Derived Properties Test".h2, ContentMode.HTML))
 
 		val form = new FormLayout()
-		root.addComponent(form)
+		addComponent(form)
 
 		firstName = new TextField("Firstname")
 		lastName = new TextField("Lastname")
@@ -80,6 +80,9 @@ class DerivedPropertiesTestUI extends UI {
 		quote.person.address = address1
 		quote.person.addresses = #[address1, address2]
 		return quote
+	}
+	
+	override enter(ViewChangeEvent event) {
 	}
 
 }

@@ -1,20 +1,22 @@
 package de.tf.propertygen.flat.ui;
 
+import javax.annotation.PostConstruct;
+
 import com.vaadin.annotations.Theme;
 import com.vaadin.data.fieldgroup.FieldGroup;
-import com.vaadin.server.VaadinRequest;
+import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 @Theme("ditem_property_gen_base")
 @SpringUI
-public abstract class AbstractStartUI extends UI implements QuoteUI {
+public abstract class AbstractStartUI extends VerticalLayout implements QuoteUI, View {
 
 	private FieldGroup quote;
 	private FormLayout form;
@@ -24,23 +26,22 @@ public abstract class AbstractStartUI extends UI implements QuoteUI {
 	private Button commit;
 	private Button updateModel;
 
-	@Override
-	protected void init(VaadinRequest request) {
-		final VerticalLayout layout = new VerticalLayout();
-		layout.setMargin(true);
-		setContent(layout);
+	
+	@PostConstruct
+	protected void init() {
+		setMargin(true);
 		form = getForm();
-		layout.addComponent(form);
+		addComponent(form);
 		form.addComponent(getTitle());
 		form.addComponent(getTotalPrice());
 		form.addComponent(getCreated());
 
 		commit = new Button("Commit");
 
-		layout.addComponent(commit);
+		addComponent(commit);
 
 		updateModel = new Button("Update Model");
-		layout.addComponent(updateModel);
+		addComponent(updateModel);
 
 		bind(this);
 	}
@@ -92,6 +93,11 @@ public abstract class AbstractStartUI extends UI implements QuoteUI {
 
 	public Button getUpdateModel() {
 		return updateModel;
+	}
+
+	@Override
+	public void enter(ViewChangeEvent event) {
+		
 	}
 
 }

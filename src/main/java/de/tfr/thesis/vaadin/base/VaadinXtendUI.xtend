@@ -9,14 +9,15 @@ import de.tf.propertygen.flat.model.XBeanItem;
 import de.tf.propertygen.flat.presenter.xtend.QuotePresenterXtendBeanItem;
 import de.tf.propertygen.flat.ui.AbstractStartUI;
 import de.tf.propertygen.flat.ui.QuoteUI;
+import com.vaadin.spring.annotation.SpringView
 
 @Theme("valo")
 @PreserveOnRefresh
-@SpringUI(path=VaadinXtendUI.VIEW_NAME)
+@SpringView(name=VaadinXtendUI.VIEW_NAME)
 public class VaadinXtendUI extends AbstractStartUI {
 
 	public static val VIEW_NAME = "vaadin-xtend-ui";
-
+	
 	override void bind(QuoteUI ui) {
 		var bean = new XBean()
 		var item = new XBeanItem(bean)
