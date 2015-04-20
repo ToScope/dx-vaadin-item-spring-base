@@ -1,15 +1,13 @@
 package de.tfr.thesis.vaadin.base;
 
-import com.vaadin.annotations.PreserveOnRefresh;
-import com.vaadin.annotations.Theme;
-import com.vaadin.spring.annotation.SpringUI;
-
-import de.tf.propertygen.flat.model.XBean;
-import de.tf.propertygen.flat.model.XBeanItem;
-import de.tf.propertygen.flat.presenter.xtend.QuotePresenterXtendBeanItem;
-import de.tf.propertygen.flat.ui.AbstractStartUI;
-import de.tf.propertygen.flat.ui.QuoteUI;
+import com.vaadin.annotations.PreserveOnRefresh
+import com.vaadin.annotations.Theme
 import com.vaadin.spring.annotation.SpringView
+import de.tf.propertygen.flat.model.XBean
+import de.tf.propertygen.flat.model.XBeanItem
+import de.tf.propertygen.flat.presenter.xtend.QuotePresenterXtendBeanItem
+import de.tf.propertygen.flat.ui.AbstractStartUI
+import de.tf.propertygen.flat.ui.QuoteUI
 
 @Theme("valo")
 @PreserveOnRefresh

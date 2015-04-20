@@ -1,7 +1,5 @@
 package de.tf.propertygen.flat.presenter.xtend;
 
-import com.vaadin.data.Property;
-
 import de.tf.propertygen.flat.mock.RandomQuote;
 import de.tf.propertygen.flat.model.IQuote;
 import de.tf.propertygen.flat.model.XBeanItem;
@@ -22,9 +20,6 @@ public class QuotePresenterXtendBeanItem extends AbstractQuotePresenter {
 	}
 
 	public void bindUIWithBeanItem() {
-		Property<Double> price = xqoute.getTotalPriceProp();
-		System.out.println(price);
-		
 		ui.getTitle().setPropertyDataSource(xqoute.getTitleProp());
 		ui.getCreated().setPropertyDataSource(xqoute.getCreatedProp());
 		ui.getTotalPrice().setPropertyDataSource(xqoute.getTotalPriceProp());
