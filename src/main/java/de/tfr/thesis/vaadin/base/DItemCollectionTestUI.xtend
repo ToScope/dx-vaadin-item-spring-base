@@ -103,7 +103,6 @@ class DItemCollectionTestUI extends VerticalLayout implements View{
 			street.propertyDataSource = item.streetProp
 			city.propertyDataSource = item.cityProp
 			zip.propertyDataSource = item.zipProp
-
 		}
 	}
 	

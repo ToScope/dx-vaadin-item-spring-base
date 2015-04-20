@@ -25,7 +25,7 @@ class LandingView extends VerticalLayout implements View {
 	}
 
 	override enter(ViewChangeEvent event) {
-		getUI.page.title = title
+		UI.page.title = title
 	}
 
 	def Button newNavigationButton(String viewName) {
@@ -36,9 +36,9 @@ class LandingView extends VerticalLayout implements View {
 		val button = new Button(caption) => [
 			addStyleName(ValoTheme.BUTTON_SMALL)
 			addClickListener [
-				UI=>[
-					navigator.navigateTo(viewName)	
-					page.title = caption		
+				UI => [
+					navigator.navigateTo(viewName)
+					page.title = caption
 				]
 			]
 		]
