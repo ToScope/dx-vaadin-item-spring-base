@@ -1,7 +1,5 @@
 package de.tfr.thesis.vaadin.base
 
-import com.vaadin.navigator.View
-import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent
 import com.vaadin.shared.ui.label.ContentMode
 import com.vaadin.spring.annotation.SpringView
 import com.vaadin.ui.Button
@@ -16,13 +14,14 @@ import de.tfr.thesis.vaadin.test.ditem.model.AddressItem
 import de.tfr.thesis.vaadin.test.ditem.model.Person
 import de.tfr.thesis.vaadin.test.ditem.model.Quote
 import de.tfr.thesis.vaadin.test.ditem.model.QuoteItem
+import de.tfr.thesis.vaadin.util.ViewAdapter
 import javax.annotation.PostConstruct
 
 import static extension de.tfr.thesis.util.html.Tags.*
 import static extension de.tfr.thesis.util.html.Units.*
 
 @SpringView(name=DItemCollectionTestUI.VIEW_NAME)
-class DItemCollectionTestUI extends VerticalLayout implements View{
+class DItemCollectionTestUI extends VerticalLayout implements ViewAdapter{
 
 	public static val VIEW_NAME = "ditem-collection-test";
 
@@ -36,11 +35,13 @@ class DItemCollectionTestUI extends VerticalLayout implements View{
 		val quote = newQuoteMock()
 		var item = new QuoteItem(quote)
 
-		table = new Table("Addresses Table", item.personProp.addressesProp)
-		table.selectable = true
-		table.immediate = true
-		table.editable = true
-		table.height = "200".px
+		table = new Table("Addresses Table", item.personProp.addressesProp)=>[
+			selectable = true
+			immediate = true
+			editable = true
+			height = "200".px	
+		]
+		
 		addComponent(table)
 
 		item.personProp.addressesProp.forEach[#[cityProp, zipProp, streetProp].forEach[addValueChangeListener(e|println(e))]]
@@ -53,7 +54,6 @@ class DItemCollectionTestUI extends VerticalLayout implements View{
 		addComponent(form)
 		table.addItemClickListener[
 			form.data = it.item as AddressItem
-			println(it)
 		]
 	}
 
@@ -113,7 +113,4 @@ class DItemCollectionTestUI extends VerticalLayout implements View{
 		
 	}
 	
-	override enter(ViewChangeEvent event) {
-	}
-
 }

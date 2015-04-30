@@ -1,8 +1,6 @@
 package de.tfr.thesis.vaadin.base
 
 import com.vaadin.annotations.Theme
-import com.vaadin.navigator.View
-import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent
 import com.vaadin.shared.ui.label.ContentMode
 import com.vaadin.spring.annotation.SpringView
 import com.vaadin.ui.FormLayout
@@ -13,13 +11,14 @@ import de.tfr.thesis.vaadin.test.ditem.model.Address
 import de.tfr.thesis.vaadin.test.ditem.model.Person
 import de.tfr.thesis.vaadin.test.ditem.model.Quote
 import de.tfr.thesis.vaadin.test.ditem.model.QuoteItem
+import de.tfr.thesis.vaadin.util.ViewAdapter
 import javax.annotation.PostConstruct
 
 import static extension de.tfr.thesis.util.html.Tags.*
 
 @Theme("valo")
 @SpringView(name=DerivedPropertiesTestUI.VIEW_NAME)
-class DerivedPropertiesTestUI extends VerticalLayout implements View {
+class DerivedPropertiesTestUI extends VerticalLayout implements ViewAdapter {
 
 	public static val VIEW_NAME = "derived-properties-test";
 
@@ -45,13 +44,13 @@ class DerivedPropertiesTestUI extends VerticalLayout implements View {
 
 		val quote = newQuoteMock()
 		var item = new QuoteItem(quote)
-
+	
 		firstName.propertyDataSource = item.personProp.firstNameProp
 		lastName.propertyDataSource = item.personProp.lastNameProp
 		fullName.propertyDataSource = item.personProp.fullNameProp
 
-		item.personProp.fullNameProp.addValueChangeListener[println(it.property)]
-		item.personProp.firstNameProp.addValueChangeListener[println(it.property)]
+		item.personProp.fullNameProp.addValueChangeListener[println(it.property.value)]
+		item.personProp.firstNameProp.addValueChangeListener[println(it.property.value)]
 
 	}
 
@@ -80,9 +79,6 @@ class DerivedPropertiesTestUI extends VerticalLayout implements View {
 		quote.person.address = address1
 		quote.person.addresses = #[address1, address2]
 		return quote
-	}
-	
-	override enter(ViewChangeEvent event) {
 	}
 
 }
